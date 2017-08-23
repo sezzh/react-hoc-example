@@ -44,7 +44,6 @@ function ppHOC (WrappedComponent) {
 
     getRef (componentInstance) {
       this.componentChild = componentInstance
-      debugger
       //this.componentChild.props.title = 'holi boli'
     }
 
@@ -66,7 +65,25 @@ function ppHOC (WrappedComponent) {
   }
 }
 
-var Componente = ppHOC(Bebi)
+// HOc by II Inheritance Inversion
+function iiHOC(WrappedComponent) {
+  return class Enhancer extends WrappedComponent {
 
-ReactDOM.render(<Componente title={'bebi'} />, document.getElementById('root'))
+    componentDidMount () {
+    }
+
+    render () {
+      return super.render()
+    }
+  }
+}
+
+const ComponenteII = iiHOC(Bebi)
+
+const ComponentePP = ppHOC(Bebi)
+
+
+
+ReactDOM.render(<ComponentePP title={'bebi'} />, document.getElementById('root'))
+ReactDOM.render(<ComponenteII title={'bebiII'} anotherProp={'anotherProp'} />, document.getElementById('root-ii'))
 registerServiceWorker();
