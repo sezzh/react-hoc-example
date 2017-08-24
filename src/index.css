@@ -3,3 +3,47 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.dragExampleContainer {
+  position: fixed;
+  width: 15rem;
+  height: 15rem;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: .3rem;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.primary {
+  background-color: purple;
+  color: white;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.secondary {
+  background-color: red;
+}
+
+.third {
+  background-color: #ff66FF;
+}
+
+.contentP {
+  background-color: #ff1256;
+}
+
+.contentS {
+  background-color: olive;
+}
+.dragExampleContent {
+  height: 3rem;
+}
+
+.isDragging {
+  z-index: 44;
+  background-color: teal;
+}

@@ -33,6 +33,7 @@
     "react": "^15.6.1",
     "react-dev-utils": "^3.1.0",
     "react-dom": "^15.6.1",
+    "react-draggable": "^3.0.2",
     "react-error-overlay": "^1.0.10",
     "react-redux": "^5.0.6",
     "recompose": "^0.25.0",

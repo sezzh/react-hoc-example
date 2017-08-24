@@ -38,7 +38,6 @@ class Main extends React.Component {
 
 // HOC by PP Proxy Properties
 function ppHOC (WrappedComponent) {
-  debugger
   return class Hocquito extends React.Component {
     // this renames the component cuz its name is lost when you pass it as argument.
     static displayName = `HOC${getDisplayName(WrappedComponent)}`
@@ -93,9 +92,7 @@ const ComponentePPWithFactory = HOCFactoryFactory(
   'parametro1', {'parametro2': 'valor parametro2'}, 'parametro 3'
 )(Bebi)
 
-debugger
 
 
-ReactDOM.render(<ComponentePPWithFactory title={'bebifactory'} />, document.getElementById('root'))
-ReactDOM.render(<ComponenteII title={'bebiII'} anotherProp={'anotherProp'} />, document.getElementById('root-ii'))
+ReactDOM.render(<App />, document.getElementById('root'))
 registerServiceWorker();
