@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import { getDisplayName } from 'recompose'
 
 class Bebi extends React.Component {
   constructor (props) {
@@ -37,7 +38,10 @@ class Main extends React.Component {
 
 // HOC by PP Proxy Properties
 function ppHOC (WrappedComponent) {
+  debugger
   return class Hocquito extends React.Component {
+    // this renames the component cuz its name is lost when you pass it as argument.
+    static displayName = `HOC${getDisplayName(WrappedComponent)}`
     constructor (props) {
       super(props)
     }
@@ -50,10 +54,10 @@ function ppHOC (WrappedComponent) {
     componentDidMount () {
       console.log('componente montado')
       console.log(this.componentChild)
+
       this.title = {
         title: 'un nuevo titulo'
       }
-      this.forceUpdate()
     }
 
     render () {
@@ -63,6 +67,10 @@ function ppHOC (WrappedComponent) {
       )
     }
   }
+}
+
+function HOCFactoryFactory (factoryParam, b, ...params) {
+  return ppHOC
 }
 
 // HOc by II Inheritance Inversion
@@ -81,9 +89,13 @@ function iiHOC(WrappedComponent) {
 const ComponenteII = iiHOC(Bebi)
 
 const ComponentePP = ppHOC(Bebi)
+const ComponentePPWithFactory = HOCFactoryFactory(
+  'parametro1', {'parametro2': 'valor parametro2'}, 'parametro 3'
+)(Bebi)
+
+debugger
 
 
-
-ReactDOM.render(<ComponentePP title={'bebi'} />, document.getElementById('root'))
+ReactDOM.render(<ComponentePPWithFactory title={'bebifactory'} />, document.getElementById('root'))
 ReactDOM.render(<ComponenteII title={'bebiII'} anotherProp={'anotherProp'} />, document.getElementById('root-ii'))
 registerServiceWorker();
