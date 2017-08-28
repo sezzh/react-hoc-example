@@ -10,6 +10,7 @@ const DragWindow = (WrappedComponent) => {
     static displayName = `DragWindow${getDisplayName(WrappedComponent)}`
 
     defaultWindowStyles = {
+      backgroundColor: '#fefefe',
       boxSizing: 'border-box',
       borderRadius: '.3rem',
       boxShadow: '0 0 1rem rgba(4, 4, 4, .3)',
@@ -18,11 +19,14 @@ const DragWindow = (WrappedComponent) => {
     }
 
     defaultHeaderStyle = {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       boxSizing: 'border-box',
       width: '100%',
-      padding: '.5rem',
+      padding: '1rem',
       cursor: '-webkit-grab',
-      backgroundColor: 'olive'
+      borderBottom: '0.06rem solid #9F9F9F'
     }
 
     openStyle = {
@@ -36,8 +40,16 @@ const DragWindow = (WrappedComponent) => {
     }
 
     defaultButtonStyle = {
-      backgroundColor: 'teal',
-      cursor: 'pointer'
+      color: '#094FA4',
+      cursor: 'pointer',
+      padding: '0 .25rem'
+    }
+
+    defaultTitleStyles = {
+      fontSize: '.88rem',
+      textTransform: 'uppercase',
+      margin: '0',
+      color: '#094FA4'
     }
 
     stateStyles = {
@@ -59,7 +71,7 @@ const DragWindow = (WrappedComponent) => {
       super(props)
       this.state = {
         pos: 'auto',
-        open: false
+        open: true
       }
     }
 
@@ -80,9 +92,17 @@ const DragWindow = (WrappedComponent) => {
     }
 
     getHeaderStyles = () => {
-      if (this.props.headerClass === void (0)) {
+      if (this.props.headerComponent === void (0)) {
         return Object.assign(
           {}, this.defaultHeaderStyle
+        )
+      }
+    }
+
+    getTitleStyles = () => {
+      if (this.props.headerComponent === void (0)) {
+        return Object.assign(
+          {}, this.defaultTitleStyles
         )
       }
     }
@@ -165,9 +185,9 @@ const DragWindow = (WrappedComponent) => {
               ? this.props.headerComponent
               : (<header
                   style={this.getHeaderStyles()}>
-                  <h2>{this.props.title}</h2>
+                  <h2 style={this.getTitleStyles()}>{this.props.title}</h2>
                   <div data-dragwindow='close' style={this.getButtonStyles()}>
-                  x
+                  X
                   </div>
                 </header>)
               }
