@@ -1,73 +1,10 @@
 import React, { Component } from 'react';
-import Draggable from 'react-draggable'
-import { getDisplayName } from 'recompose'
+
+import DragWindowSystem from './components/DragWindowSystem'
+import DragWindow from './components/DragWindow'
+
 import logo from './logo.svg';
 import './App.css';
-
-const DragWindow = (WrappedComponent) => {
-  return class DragWindowHOC extends Component {
-
-    static displayName = `DragWindow${getDisplayName(WrappedComponent)}`
-
-    constructor (props) {
-      super(props)
-    }
-
-    handlerStart = (event) => {
-      this.props.handlerDragStart(this.refComponent.dataset.name)
-    }
-
-    componentDidMount () {
-      this.props.register(this.refComponent)
-    }
-
-    componentWillUnmount () {
-      this.windowOnClose()
-    }
-
-    windowOnClose = () => {
-      this.props.unregister(this.props.name)
-    }
-
-    render () {
-      const pos = this.props.drags[this.props.name]
-      const selectedStyle = {
-        zIndex: '10'
-      }
-      const prevStyle = {
-        zIndex: '9'
-      }
-      return (
-        <Draggable
-          handle={'.handler'}
-          onStart={this.handlerStart}>
-          <div
-            onClick={this.handlerStart}
-            style={
-              (pos === 'active')
-              ? selectedStyle
-              : (pos === 'prev')
-              && prevStyle
-            }
-            ref={(component) => {this.refComponent = component}}
-            data-name={this.props.name}
-            className={
-              (pos === 'active')
-                ? `dragExampleContainer primary isDragging`
-                : `dragExampleContainer primary`
-            }>
-            <div className={'handler'}>Drag from here</div>
-            <WrappedComponent {...this.props} />
-          </div>
-        </Draggable>
-      )
-    }
-  }
-}
-
-
-
-
 
 class DummyComponent extends Component {
   render () {
@@ -75,17 +12,23 @@ class DummyComponent extends Component {
       <div>
         <div className={'dragExampleContent  contentP'}>{this.props.name}</div>
         <div>Yo también quiero una mac :c</div>
+        <div>{this.props.content}</div>
       </div>
     )
   }
 }
 
 class Nomina extends Component {
+
+  handlerClick = () => {
+    console.log('clicked');
+  }
   render () {
     return (
       <div>
         <div className={'dragExampleContent  contentP'}>{this.props.name}</div>
-        <div>Componente de Nomina</div>
+        <div>esto es un contenido de nomina</div>
+        <button onClick={this.handlerClick}>botoncito</button>
       </div>
     )
   }
@@ -95,36 +38,15 @@ const Dummy = DragWindow(DummyComponent)
 
 const NominaWindow = DragWindow(Nomina)
 
+
 class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      drags: {}
-    }
-    this.drags = {}
+
+  state = {
+    testingProp : 'esto es content por default'
   }
 
-  register = (node) => {
-    if (!this.drags.hasOwnProperty(node.dataset.name)) {
-      this.drags[node.dataset.name] = 'auto'
-    }
-  }
-
-  handlerDragStart = (nodeName) => {
-    this.buildDragState(nodeName)
-  }
-
-  buildDragState = (nodeName) => {
-    for (var prop in this.drags) {
-      if (this.drags[prop] === 'prev') {
-        this.drags[prop] = 'auto'
-      }
-      if (this.drags[prop] === 'active') {
-        this.drags[prop] = 'prev'
-      }
-    }
-    this.drags[nodeName] = 'active'
-    this.setState({drags: this.drags})
+  testingBubling = (event) => {
+    this.setState({'testingProp': 'este es el nuevo content'})
   }
 
   render() {
@@ -137,36 +59,41 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <div className="draggableSpace">
+        <DragWindowSystem>
+          <div>
+            <h1>Botonera</h1>
+            <div>
+              <button onClick={this.testingBubling} data-dragwindow='DragExample1'>
+                abre DragExample1
+              </button>
+            </div>
+          </div>
+
           <div>
             <Dummy
               name={'DragExample1'}
-              drags={this.state.drags}
-              handlerDragStart={this.handlerDragStart}
-              register={this.register} />
+              title='Esto es un titulo'
+              content={this.state.testingProp} />
           </div>
           <div>
             <Dummy
               name={'DragExample2'}
-              drags={this.state.drags}
-              handlerDragStart={this.handlerDragStart}
-              register={this.register}  />
+              headerComponent={(
+                <div>
+                  <h2>Header Component as prop</h2>
+                  <button data-drag-window='close'>close</button>
+                </div>
+              )} />
           </div>
           <div>
             <NominaWindow
-              name={'DragExample3'}
-              drags={this.state.drags}
-              handlerDragStart={this.handlerDragStart}
-              register={this.register}  />
+              name={'DragExample3'} />
           </div>
           <div>
             <NominaWindow
-              name={'DragExample4'}
-              drags={this.state.drags}
-              handlerDragStart={this.handlerDragStart}
-              register={this.register}  />
+              name={'DragExample4'} />
           </div>
-        </div>
+        </DragWindowSystem>
       </div>
     );
   }
