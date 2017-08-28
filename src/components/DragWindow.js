@@ -167,7 +167,9 @@ const DragWindow = (WrappedComponent) => {
                 </header>)
               }
             </div>
-            <WrappedComponent {...this.props} />
+            <WrappedComponent
+              {...this.props}
+              closeWindow={this.windowOnClose.bind(this)} />
           </div>
         </Draggable>
       )

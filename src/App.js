@@ -34,9 +34,58 @@ class Nomina extends Component {
   }
 }
 
+
+class WithHeader extends Component {
+  render () {
+    return (
+      <div>
+        <header>nuestro lazo que motiva dar paso mas<button data-dragwindow='close'>close</button></header>
+        <div>
+          component content
+        </div>
+        <div>
+          component content3
+        </div>
+      </div>
+    )
+  }
+}
+
+class AnotherComponent extends Component {
+  render () {
+    return (
+      <div>
+        <h1>Esto es otro componente</h1>
+        <button onClick={this.props.closeWindow}>testing</button>
+      </div>
+    )
+  }
+}
+
+class Panel extends Component {
+  render () {
+    return (
+      <div>
+        <h1>Una en el día y la otra en la noche</h1>
+        <section>
+          botonera más anidada
+          <div>
+            <button data-dragwindow='DragExample2'>abre DragExample2</button>
+          </div>
+        </section>
+      </div>
+    )
+  }
+}
+
+
 const Dummy = DragWindow(DummyComponent)
 
 const NominaWindow = DragWindow(Nomina)
+
+const AnotherComponentWindow = DragWindow(AnotherComponent)
+
+const WithHeaderWindow = DragWindow(WithHeader)
 
 
 class App extends Component {
@@ -66,7 +115,11 @@ class App extends Component {
               <button onClick={this.testingBubling} data-dragwindow='DragExample1'>
                 abre DragExample1
               </button>
+              <button data-dragwindow='DragExample3'>abre DragExample3</button>
+              <button data-dragwindow='DragExample4'>abre DragExample3</button>
+              <button data-dragwindow='DragExample5'>abre DragExample5</button>
             </div>
+            <Panel />
           </div>
 
           <div>
@@ -81,18 +134,19 @@ class App extends Component {
               headerComponent={(
                 <div>
                   <h2>Header Component as prop</h2>
-                  <button data-drag-window='close'>close</button>
+                  <button data-dragwindow='close'>close</button>
                 </div>
               )} />
           </div>
           <div>
-            <NominaWindow
+            <AnotherComponentWindow
               name={'DragExample3'} />
           </div>
           <div>
             <NominaWindow
               name={'DragExample4'} />
           </div>
+          <WithHeaderWindow name={'DragExample5'}/>
         </DragWindowSystem>
       </div>
     );
