@@ -133,8 +133,12 @@ const DragWindow = (WrappedComponent) => {
 
     handlerWindow = (dragWindowName) => {
       if (dragWindowName === this.props.name) {
-        this.handlerStart()
-        this.setState({open: !this.state.open})
+        if (this.state.open) {
+          this.windowOnClose()
+        } else {
+          this.handlerStart()
+          this.setState({open: !this.state.open})
+        }
       }
     }
 
