@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
-import DragWindowSystem from './components/DragWindowSystem'
-import DragWindow from './components/DragWindow'
+import { DragWindow, DragWindowSystem } from './dist/index'
 
 import logo from './logo.svg';
 import './App.css';

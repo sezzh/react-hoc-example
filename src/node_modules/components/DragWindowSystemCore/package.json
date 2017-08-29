@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "name": "DragWindowSystemCore",
+  "main": "./DragWindowSystemCore.js"
+}
